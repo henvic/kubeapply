@@ -298,11 +298,7 @@ func (a *Apply) configure() error {
 		return err
 	}
 
-	if err := a.saveFile("request", a.RequestDump); err != nil {
-		return err
-	}
-
-	return nil
+	return a.saveFile("request", a.RequestDump)
 }
 
 var blacklist = map[string]struct{}{
