@@ -1,0 +1,24 @@
+sudo: false
+
+language: go
+
+go:
+  - "1.11.5"
+  - "tip"
+
+matrix:
+  allow_failures:
+    - go: tip
+
+before_install:
+  - go get github.com/mattn/goveralls
+  - go get github.com/kisielk/errcheck
+  - go get golang.org/x/lint/golint
+  - go get honnef.co/go/tools/cmd/staticcheck
+  - go get github.com/securego/gosec/cmd/gosec
+
+script:
+  - make test
+
+after_success:
+  - sh $(pwd)/scripts/coverage.sh --coveralls
