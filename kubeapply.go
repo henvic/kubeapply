@@ -402,7 +402,7 @@ func (a *Apply) init() {
 	defer a.m.Unlock()
 
 	if a.id == "" {
-		a.id = uuid.Must(uuid.NewV4()).String()
+		a.id = uuid.NewV4().String()
 
 		a.timestamp = time.Now()
 		a.dir = filepath.Join(configurations,
