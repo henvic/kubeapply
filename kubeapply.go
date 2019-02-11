@@ -306,9 +306,9 @@ func (a *Apply) configure() error {
 }
 
 var blacklist = map[string]struct{}{
-	"description": struct{}{},
-	"request":     struct{}{},
-	"response":    struct{}{},
+	"description": {},
+	"request":     {},
+	"response":    {},
 }
 
 func (a *Apply) checkUploads() error {
