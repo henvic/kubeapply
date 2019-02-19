@@ -5,7 +5,15 @@ kubeapply is a microservice for running `kubectl apply` through a web API.
 
 kubeapply makes it easier to use Kubernetes in a declarative manner while Kubernetes API still doesn't have an endpoint similar to `kubectl apply`.
 
-See Kubernetes issue [v2 API proposal "desired vs actual #17333"](https://issues.k8s.io/17333)
+## Server-side Apply enhancement workaround
+`kubectl apply` is a core part of the Kubernetes config workflow. However, its implementation is in the client-side of a CLI tool. As of February 2019, there is work in progress to migrate the functionality to the server-side.
+
+This middleware is a workaround useful for using Kubernetes `kubectl apply` over an HTTP connection while work on this integration is still in progress.
+
+* [Kubernetes Enhancement Proposals: Apply](https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/0006-apply.md)
+* [v2 API proposal "desired vs actual #17333"](https://issues.k8s.io/17333)
+* [Server-side Apply #555](https://github.com/kubernetes/enhancements/issues/555)
+* [Umbrella Issue for Server Side Apply #73723](https://issues.k8s.io/73723)
 
 ## Dependencies
 
