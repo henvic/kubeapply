@@ -42,6 +42,7 @@ func (s *Server) Serve(ctx context.Context, params Params) error {
 	s.params = params
 
 	mux := http.NewServeMux()
+	mux.HandleFunc("/", handleHome)
 	mux.HandleFunc("/apply", handleApply)
 	mux.HandleFunc("/version", handleVersion)
 
@@ -103,4 +104,8 @@ func (s *Server) listen() {
 	err = s.http.Serve(l)
 
 	s.ec <- err
+}
+
+func handleHome(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "kubeapply is running. Docs in https://github.com/henvic/kubeapply")
 }
