@@ -107,5 +107,5 @@ func (s *Server) listen() {
 }
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "kubeapply is running. Docs in https://github.com/henvic/kubeapply")
+	_, _ = fmt.Fprintln(w, "kubeapply is running. Docs in https://github.com/henvic/kubeapply")
 }
