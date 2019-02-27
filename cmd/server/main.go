@@ -47,6 +47,6 @@ func profiler() {
 }
 
 func init() {
-	flag.StringVar(&params.Address, "addr", "127.0.0.1:8080", "Serving address")
+	flag.StringVar(&params.Address, "addr", "127.0.0.1:9000", "Serving address")
 	flag.BoolVar(&params.ExposeDebug, "expose-debug", true, "Expose debugging tools over HTTP (on port 8081)")
 }

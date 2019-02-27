@@ -10,4 +10,4 @@ COPY . /go/src/github.com/henvic/kubeapply
 RUN [ "go", "build", "-o", "/bin/kubeapply", "/go/src/github.com/henvic/kubeapply/cmd/server" ]
 
 EXPOSE 8080
-ENTRYPOINT [ "/bin/kubeapply", "-addr", "0.0.0.0:8080" ]
+ENTRYPOINT [ "/bin/kubeapply", "-addr=0.0.0.0:9000" ]

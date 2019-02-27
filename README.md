@@ -29,12 +29,15 @@ The environment variable `DEBUG` sets the logging to debug mode.
 
 `kubectl` must be available on the machine.
 
+A Docker image is publicly available as [wedeploy/kubeapply](https://hub.docker.com/r/wedeploy/kubeapply).
+Kubernetes cluster configurations are stored in the /configurations directory.
+
 ## Security
 It is unsafe to run this software unless you protect this service appropriately.
 You must run it on an isolated machine with limited network connectivity.
 
-Port 8080 (API) is only accessible from localhost.
-Port 8081 (debugging tool) is enabled by default (also only for localhost).
+Port 9000 (API) is only accessible from localhost, except in the Docker image.
+Port 8081 (debugging tool) is enabled by default only for localhost.
 
 For your safety, you must assume that anyone who can reach this middleware endpoints has total control over the machine it is running on. Reasons: cluster options, file-system access, etc.
 
@@ -43,7 +46,7 @@ To communicate with other machines outside of a trusted network use a secure lay
 ## Endpoints
 
 ### /version
-`curl http://localhost:8080/version -v` returns the local `kubectl` version.
+`curl http://localhost:9000/version -v` returns the local `kubectl` version.
 
 ### /apply
 
@@ -78,7 +81,7 @@ Configurations requested are recorded on a directory inside `configurations` nam
 You don't need to pass the `--filename` flag as if no file is found on your YAML, `--filename=./` and `--recursive` are automatically set.
 
 Run example with --dry-run:
-`curl -d @example.json -v -XPUT http://localhost:8080/apply -H "Content-Type: application/json" | jq`
+`curl -d @example.json -v -XPUT http://localhost:9000/apply -H "Content-Type: application/json" | jq`
 
 #### Flags
 You don't need to prefix flags or shortcuts with `--` or `-`. You also can use numbers or booleans directly.
