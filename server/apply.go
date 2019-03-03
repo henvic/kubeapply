@@ -85,13 +85,13 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 	resp, err = a.Run(r.Context())
 
 	if err != nil {
-		if ee, ok := err.(*exec.ExitError); !ok {
+		if ee, ok := err.(*exec.ExitError); ok {
 			ErrorHandler(w, r, http.StatusInternalServerError)
-			log.Errorf("error executing process for request %s (PID %v): %v", resp.ID, ee.Pid(), err)
+			log.Errorf("error swapping process for request %s (PID %v): %v", resp.ID, ee.Pid(), err)
 			return
 		}
 
-		log.Infof("error executing request %s: %v", resp.ID, err)
+		log.Errorf("error executing request %s: %v", resp.ID, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf8")
