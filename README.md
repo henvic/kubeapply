@@ -65,6 +65,10 @@ You can use all flags available on `kubectl apply` (including global ones).
 }
 ```
 
+You can use `command` attribute to call another kubectl command.
+
+Example: `"command": "create"` calls `kubectl create`.
+
 A JSON object is returned containing the explanation of the executed command and its result.
 
 Some details:

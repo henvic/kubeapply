@@ -15,8 +15,9 @@ import (
 
 // ApplyRequestBody for the apply endpoint.
 type ApplyRequestBody struct {
-	Files map[string]decoding.FileValue `json:"files,omitempty"`
-	Flags map[string]decoding.FlagValue `json:"flags,omitempty"`
+	Command string                        `json:"command,omitempty"`
+	Files   map[string]decoding.FileValue `json:"files,omitempty"`
+	Flags   map[string]decoding.FlagValue `json:"flags,omitempty"`
 }
 
 // FlagsMap gets the flags on a map[string]string.
@@ -70,6 +71,8 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 	}
 
 	a := &kubeapply.Apply{
+		Subcommand: arb.Command,
+
 		Flags: arb.FlagsMap(),
 		Files: arb.FilesMap(),
 

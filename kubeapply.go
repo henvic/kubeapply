@@ -70,7 +70,7 @@ type Apply struct {
 	args []string
 
 	executable string
-	subcommand string
+	Subcommand string
 
 	id        string
 	timestamp time.Time
@@ -104,15 +104,15 @@ func (a *Apply) unsafeCommand() (string, []string) {
 		a.executable = Executable
 	}
 
-	if a.subcommand == "" {
-		a.subcommand = Command
+	if a.Subcommand == "" {
+		a.Subcommand = Command
 	}
 
 	if a.Flags == nil {
 		a.Flags = Flags{}
 	}
 
-	args := []string{a.subcommand}
+	args := []string{a.Subcommand}
 
 	var flags = a.Flags
 
