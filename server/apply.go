@@ -5,7 +5,6 @@ import (
 	"net"
 	"net/http"
 	"net/http/httputil"
-	"os/exec"
 	"strings"
 
 	"github.com/henvic/kubeapply"
@@ -57,7 +56,7 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 	var dump, err = httputil.DumpRequest(r, true)
 
 	if err != nil {
-		ErrorHandler(w, r, http.StatusInternalServerError)
+		ErrorHandler(w, r, http.StatusInternalServerError, "cannot record request")
 		log.Errorf("cannot dump request (remote IP: %v", r.RemoteAddr)
 		return
 	}
@@ -65,7 +64,7 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 	arb := ApplyRequestBody{}
 
 	if ed := json.NewDecoder(r.Body).Decode(&arb); ed != nil {
-		ErrorHandler(w, r, http.StatusBadRequest)
+		ErrorHandler(w, r, http.StatusBadRequest, "cannot decode request body as JSON")
 		log.Debugf("bad request: %v", ed)
 		return
 	}
@@ -88,13 +87,8 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 	resp, err = a.Run(r.Context())
 
 	if err != nil {
-		if ee, ok := err.(*exec.ExitError); ok {
-			ErrorHandler(w, r, http.StatusInternalServerError)
-			log.Errorf("error swapping process for request %s (PID %v): %v", resp.ID, ee.Pid(), err)
-			return
-		}
-
-		log.Errorf("error executing request %s: %v", resp.ID, err)
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Errorf("request %s had an unexpected error: %v", resp.ID, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf8")

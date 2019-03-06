@@ -210,6 +210,7 @@ var applyRunTests = []struct {
 		},
 		"echo-not-found-12395234",
 		Response{
+			Stderr:   `exec: "echo-not-found-12395234": executable file not found in $PATH`,
 			ExitCode: -1,
 		},
 		errors.New("exec: \"echo-not-found-12395234\": executable file not found in $PATH"),

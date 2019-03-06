@@ -184,12 +184,31 @@ type Response struct {
 	Dir string `json:"dir,omitempty"`
 }
 
+func (r *Response) embedError(err error) {
+	// skip embeding error messages if exit code != 0
+	if _, ok := err.(*exec.ExitError); ok {
+		return
+	}
+
+	switch {
+	case err == nil:
+		return
+	case r.Stderr == "":
+		r.Stderr = err.Error()
+	default:
+		r.Stderr += fmt.Sprintf("\nkubeapply exec.Command error: %v", err)
+	}
+}
+
 // Run command.
 func (a *Apply) Run(ctx context.Context) (Response, error) {
 	a.init()
 
 	if err := a.maybeConfigure(); err != nil {
-		return Response{}, err
+		return Response{
+			Stderr:   err.Error(),
+			ExitCode: -1,
+		}, err
 	}
 
 	var stderr, stdout, err = a.cmdRun(ctx)
@@ -207,6 +226,10 @@ func (a *Apply) Run(ctx context.Context) (Response, error) {
 		ExitCode: getExitStatus(err),
 
 		Dir: a.dir,
+	}
+
+	if err != nil {
+		r.embedError(err)
 	}
 
 	if esr := a.maybeSaveResponse(r); esr != nil {
