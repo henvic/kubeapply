@@ -264,11 +264,13 @@ func (a *Apply) maybeSaveResponse(r Response) error {
 }
 
 func (a *Apply) saveResponse(r Response) error {
-	var b, err = json.Marshal(r)
+	var b, err = json.MarshalIndent(r, "", "    ")
 
 	if err != nil {
 		return err
 	}
+
+	b = append(b, '\n')
 
 	return a.saveFile("response", b)
 }
