@@ -3,7 +3,7 @@ sudo: false
 language: go
 
 go:
-  - "1.12.0"
+  - "1.12"
   - "tip"
 
 matrix:
