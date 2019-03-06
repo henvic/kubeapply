@@ -43,7 +43,7 @@ func (a *ApplyRequestBody) FilesMap() map[string][]byte {
 }
 
 func handleApply(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPut {
+	if r.Method != http.MethodPut && r.Method != http.MethodPost {
 		ErrorHandler(w, r, http.StatusMethodNotAllowed,
 			"kubectl reference: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#apply")
 		return
