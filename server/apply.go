@@ -54,7 +54,7 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var dump, err = httputil.DumpRequest(r, false)
+	var dump, err = httputil.DumpRequest(r, true)
 
 	if err != nil {
 		ErrorHandler(w, r, http.StatusInternalServerError)
