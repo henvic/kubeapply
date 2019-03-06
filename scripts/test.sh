@@ -12,7 +12,7 @@ errcheck $(go list ./...)
 echo "Linting code."
 test -z "$(golint `go list ./...` | tee /dev/stderr)"
 echo "Examining source code against code defect."
-go vet -shadow $(go list ./...)
+go vet $(go list ./...)
 echo "Running staticcheck toolset https://staticcheck.io"
 staticcheck ./...
 echo "Checking if code contains security issues."

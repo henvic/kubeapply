@@ -1,4 +1,4 @@
-FROM golang as builder
+FROM golang:1.12.0 as builder
 LABEL maintainer="Henrique Vicente <henrique.vicente@liferay.cloud>"
 
 ENV KUBEAPPLY_LATEST_VERSION="v1.13.3"
