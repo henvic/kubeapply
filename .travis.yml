@@ -16,6 +16,7 @@ before_install:
   - go get golang.org/x/lint/golint
   - go get honnef.co/go/tools/cmd/staticcheck
   - go get github.com/securego/gosec/cmd/gosec
+  - go get -u golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
 
 script:
   - make test

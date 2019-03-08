@@ -13,6 +13,7 @@ echo "Linting code."
 test -z "$(golint `go list ./...` | tee /dev/stderr)"
 echo "Examining source code against code defect."
 go vet $(go list ./...)
+go vet -vettool=$(which shadow)
 echo "Running staticcheck toolset https://staticcheck.io"
 staticcheck ./...
 echo "Checking if code contains security issues."
