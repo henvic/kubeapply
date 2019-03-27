@@ -149,11 +149,16 @@ func (a *Apply) unsafeCommand() (string, []string) {
 }
 
 func (a *Apply) addFilenameFlag() []string {
-	if len(a.Files) == 0 {
-		return nil
+	for filename := range a.Files {
+		// expect Kubernetes configuration objects
+		if strings.HasSuffix(filename, ".json") ||
+			strings.HasSuffix(filename, ".yaml") ||
+			strings.HasSuffix(filename, ".yml") {
+			return []string{"--filename=./", "--recursive"}
+		}
 	}
 
-	return []string{"--filename=./", "--recursive"}
+	return nil
 }
 
 func addFlag(f string) string {
