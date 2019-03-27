@@ -69,6 +69,10 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	runApply(w, r, arb, dump)
+}
+
+func runApply(w http.ResponseWriter, r *http.Request, arb ApplyRequestBody, dump []byte) {
 	a := &kubeapply.Apply{
 		Subcommand: arb.Command,
 
@@ -80,11 +84,9 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 		RequestDump: dump,
 	}
 
-	var resp kubeapply.Response
-
 	log.Debugf("Preparing to run kubectl apply request from IP %v", r.RemoteAddr)
 
-	resp, err = a.Run(r.Context())
+	var resp, err = a.Run(r.Context())
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
