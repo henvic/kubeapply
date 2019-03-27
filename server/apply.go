@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -85,6 +86,7 @@ func runApply(w http.ResponseWriter, r *http.Request, arb ApplyRequestBody, dump
 	}
 
 	log.Debugf("Preparing to run kubectl apply request from IP %v", r.RemoteAddr)
+	w.Header().Set("Content-Type", "application/json; charset=utf8")
 
 	var resp, err = a.Run(r.Context())
 
@@ -93,11 +95,8 @@ func runApply(w http.ResponseWriter, r *http.Request, arb ApplyRequestBody, dump
 		log.Errorf("request %s had an unexpected error: %v", resp.ID, err)
 	}
 
-	w.Header().Set("Content-Type", "application/json; charset=utf8")
-	ee := json.NewEncoder(w).Encode(resp)
-
-	if ee != nil {
-		ErrorHandler(w, r, http.StatusInternalServerError)
+	if ee := json.NewEncoder(w).Encode(resp); ee != nil {
+		ErrorHandler(w, r, -1, fmt.Sprintf("cannot encode response for request %s: %v", resp.ID, ee))
 		log.Errorf("cannot encode response for request %s: %v", resp.ID, ee)
 		return
 	}
