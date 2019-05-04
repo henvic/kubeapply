@@ -1,7 +1,8 @@
-FROM golang:1.12.1 as builder
+FROM golang:1.12.4 as builder
 LABEL maintainer="Henrique Vicente <henrique.vicente@liferay.cloud>"
 
-ENV KUBECTL_LATEST_VERSION="v1.14.0"
+# check newest version at https://storage.googleapis.com/kubernetes-release/release/stable.txt
+ENV KUBECTL_LATEST_VERSION="v1.14.1"
 
 ADD https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_LATEST_VERSION}/bin/linux/amd64/kubectl /bin/kubectl
 COPY . /go/src/github.com/henvic/kubeapply
