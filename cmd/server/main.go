@@ -12,7 +12,6 @@ import (
 
 	"github.com/henvic/ctxsignal"
 	"github.com/henvic/kubeapply/server"
-	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"
 )
 
