@@ -112,7 +112,7 @@ func (a *Apply) unsafeCommand() (string, []string) {
 		a.Flags = Flags{}
 	}
 
-	args := []string{a.Subcommand}
+	args := strings.Split(a.Subcommand, " ")
 
 	var flags = a.Flags
 
